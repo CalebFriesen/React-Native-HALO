@@ -166,5 +166,11 @@
     "languages": "kotlin-objc",
     "type": "turbo-module",
     "version": "0.53.0"
+  },
+  "dependencies": {
+    "@react-native-camera-roll/camera-roll": "^7.10.2",
+    "react-native-nitro-image": "^0.15.1",
+    "react-native-nitro-modules": "^0.35.10",
+    "react-native-vision-camera": "^5.0.11"
   }
 }

@@ -2707,6 +2707,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-camera-roll/camera-roll@npm:^7.10.2":
+  version: 7.10.2
+  resolution: "@react-native-camera-roll/camera-roll@npm:7.10.2"
+  peerDependencies:
+    react-native: ">=0.59"
+  checksum: e2d79f302d55e4ec33c91dd861c9cd7ad04dc551796f95037d295a474910c6985315b1ea19897e1c1ba21fa5453d322319804f7206a7cc4eb2dc251fc29ebe08
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:15.0.0-alpha.2":
   version: 15.0.0-alpha.2
   resolution: "@react-native-community/cli-clean@npm:15.0.0-alpha.2"
@@ -11773,7 +11782,10 @@ __metadata:
     react-native: 0.81.0
     react-native-builder-bob: ^0.40.13
     react-native-monorepo-config: ^0.1.9
+    react-native-nitro-image: ^0.15.1
+    react-native-nitro-modules: ^0.35.10
     react-native-safe-area-context: ^5.5.2
+    react-native-vision-camera: ^5.0.11
   languageName: unknown
   linkType: soft
 
@@ -11786,6 +11798,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.0
     "@eslint/js": ^9.22.0
     "@evilmartians/lefthook": ^1.5.0
+    "@react-native-camera-roll/camera-roll": ^7.10.2
     "@react-native-community/cli": 15.0.0-alpha.2
     "@react-native/babel-preset": 0.81.0
     "@react-native/eslint-config": ^0.78.0
@@ -11804,6 +11817,9 @@ __metadata:
     react: 19.1.0
     react-native: 0.81.0
     react-native-builder-bob: ^0.40.13
+    react-native-nitro-image: ^0.15.1
+    react-native-nitro-modules: ^0.35.10
+    react-native-vision-camera: ^5.0.11
     release-it: ^17.10.0
     turbo: ^1.10.7
     typescript: ^5.8.3
@@ -11823,6 +11839,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-nitro-image@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "react-native-nitro-image@npm:0.15.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-modules: "*"
+  checksum: c8ce8850b3386a768292a89d27e9c481ca80465eb777f91e30afce5fc43976c76ffaffd24704986ec749617065461a3cfa068476e50caa60450b089429785e58
+  languageName: node
+  linkType: hard
+
+"react-native-nitro-modules@npm:^0.35.10":
+  version: 0.35.10
+  resolution: "react-native-nitro-modules@npm:0.35.10"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 9a657b0503fa549d3d35e275f14872950c5f798367e8a983e5386760460d2bdbac4bd107ea78e67aec08eb03a8244e60f684faf7d252703bd4b1931bfac1890f
+  languageName: node
+  linkType: hard
+
 "react-native-safe-area-context@npm:^5.5.2":
   version: 5.6.1
   resolution: "react-native-safe-area-context@npm:5.6.1"
@@ -11830,6 +11867,18 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: f346615d5f8f26c0c8459d29c149ea3f66684b8ae79cea6fd48d118d039851a69a92955d67b455d0e7ab46639155c4357ebf58ec1859b2377ee459e2a04b602b
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^5.0.11":
+  version: 5.0.11
+  resolution: "react-native-vision-camera@npm:5.0.11"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-image: "*"
+    react-native-nitro-modules: "*"
+  checksum: 414aadc564149fd010e52b91a6c20e36050a27909180d72e20aa36507fb193fdf2752d539eeafbc99f72558429123ded362b41731e415138e9e72dfde31fead5
   languageName: node
   linkType: hard
 
