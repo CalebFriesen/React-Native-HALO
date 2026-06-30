@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,6 @@ import DocumentScanner, {
 } from 'react-native-document-scanner-plugin';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
-
-const MOCK_IMAGE_URL =
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/A_simple_feedback_control_loop.svg/640px-A_simple_feedback_control_loop.svg.png';
 
 export default function App() {
   const [scannedImage, setScannedImage] = useState<string | null>(null);
@@ -58,12 +55,6 @@ export default function App() {
     }
   };
 
-  const mockScan = () => {
-    setError(null);
-    setStatus('Scan complete! (mock)');
-    setScannedImage(MOCK_IMAGE_URL);
-  };
-
   const clearScan = () => {
     setScannedImage(null);
     setStatus('Ready to scan');
@@ -101,11 +92,13 @@ export default function App() {
 
     // Live preview
     return (
-      <Camera
-        style={styles.cameraPreview}
-        device={device}
-        isActive={true}
-      />
+      <View style={styles.cameraPreview}>
+        <Camera
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
+        />
+      </View>
     );
   };
 
@@ -121,10 +114,6 @@ export default function App() {
 
         <TouchableOpacity style={styles.button} onPress={scanDocument}>
           <Text style={styles.buttonText}>Scan Document</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.mockButton} onPress={mockScan}>
-          <Text style={styles.mockButtonText}>Mock Scan</Text>
         </TouchableOpacity>
 
         {scannedImage && (
@@ -206,20 +195,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  mockButton: {
-    backgroundColor: '#2563eb',
-    paddingVertical: 16,
-    paddingHorizontal: 48,
-    borderRadius: 12,
-    width: '100%',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  mockButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
