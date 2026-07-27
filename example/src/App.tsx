@@ -13,6 +13,7 @@ import DocumentScanner, {
 } from 'react-native-document-scanner-plugin';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function App() {
   const [scannedImage, setScannedImage] = useState<string | null>(null);
@@ -54,7 +55,33 @@ export default function App() {
         console.error('Scan error:', e);
     }
   };
+const selectPhoto = async () => {
+  try {
+    setStatus('Opening photo library...');
+    setError(null);
 
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 1,
+    });
+
+    if (result.didCancel) {
+      setStatus('Selection cancelled');
+      return;
+    }
+
+    const uri = result.assets?.[0]?.uri;
+    if (uri) {
+      setScannedImage(uri);
+      setStatus('Photo selected');
+    }
+  } catch (e: any) {
+    const msg = e?.message || e?.toString() || JSON.stringify(e) || 'Unknown error';
+    setError(msg);
+    setStatus('Error');
+    console.error('Photo selection error:', e);
+  }
+};
   const clearScan = () => {
     setScannedImage(null);
     setStatus('Ready to scan');
@@ -114,6 +141,10 @@ export default function App() {
 
         <TouchableOpacity style={styles.button} onPress={scanDocument}>
           <Text style={styles.buttonText}>Scan Document</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.selectButton} onPress={selectPhoto}>
+          <Text style={styles.selectButtonText}>Select Photo</Text>
         </TouchableOpacity>
 
         {scannedImage && (
@@ -218,5 +249,21 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 24,
     overflow: 'hidden',
+  },
+  selectButton: {
+    backgroundColor: 'transparent',
+    paddingVertical: 14,
+    paddingHorizontal: 48,
+    borderRadius: 12,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#111',
+  },
+  selectButtonText: {
+    color: '#111',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
