@@ -19,6 +19,7 @@ export default function App() {
   const [scannedImage, setScannedImage] = useState<string | null>(null);
   const [status, setStatus] = useState<string>('Ready to scan');
   const [error, setError] = useState<string | null>(null);
+  const [overlayImage, setOverlayImage] = useState<string | null>(null);
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice('back');
@@ -55,6 +56,7 @@ export default function App() {
         console.error('Scan error:', e);
     }
   };
+
 const selectPhoto = async () => {
   try {
     setStatus('Opening photo library...');
@@ -82,6 +84,33 @@ const selectPhoto = async () => {
     console.error('Photo selection error:', e);
   }
 };
+
+  const pickOverlayImage = async () => {
+    try {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 1,
+      });
+
+      if (result.didCancel) {
+        return;
+      }
+
+      const uri = result.assets?.[0]?.uri;
+      if (uri) {
+        setOverlayImage(uri);
+      }
+    } catch (e: any) {
+      const msg = e?.message || e?.toString() || JSON.stringify(e) || 'Unknown error';
+      setError(msg);
+      console.error('Overlay image selection error:', e);
+    }
+  };
+
+  const clearOverlayImage = () => {
+    setOverlayImage(null);
+  };
+
   const clearScan = () => {
     setScannedImage(null);
     setStatus('Ready to scan');
@@ -92,7 +121,15 @@ const selectPhoto = async () => {
     // Show scanned image if we have one
     if (scannedImage) {
       return (
-        <Image source={{ uri: scannedImage }} style={styles.image} />
+        <View style={styles.cameraPreview}>
+          <Image source={{ uri: scannedImage }} style={styles.image} />
+            {overlayImage && (
+            <Image
+              source={{ uri: overlayImage }} style={styles.overlayImage}
+              resizeMode="contain"
+            />
+          )}
+        </View>
       );
     }
 
@@ -125,6 +162,13 @@ const selectPhoto = async () => {
           device={device}
           isActive={true}
         />
+        {overlayImage && (
+          <Image
+            source={{ uri: overlayImage }}
+            style={styles.overlayImage}
+            resizeMode="contain"
+          />
+        )}
       </View>
     );
   };
@@ -142,6 +186,18 @@ const selectPhoto = async () => {
         <TouchableOpacity style={styles.button} onPress={scanDocument}>
           <Text style={styles.buttonText}>Scan Document</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.selectButton} onPress={pickOverlayImage}>
+          <Text style={styles.selectButtonText}>
+            {overlayImage ? 'Change Overlay Image' : 'Add Overlay Image'}
+          </Text>
+        </TouchableOpacity>
+
+        {overlayImage && (
+          <TouchableOpacity style={styles.clearButton} onPress={clearOverlayImage}>
+            <Text style={styles.clearButtonText}>Remove Overlay</Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity style={styles.selectButton} onPress={selectPhoto}>
           <Text style={styles.selectButtonText}>Select Photo</Text>
@@ -236,6 +292,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: '100%',
     alignItems: 'center',
+    marginBottom: 12,
     borderWidth: 1,
     borderColor: '#ccc',
   },
@@ -249,6 +306,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 24,
     overflow: 'hidden',
+  },
+  overlayImage: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.4,
   },
   selectButton: {
     backgroundColor: 'transparent',
