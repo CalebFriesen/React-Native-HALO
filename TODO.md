@@ -11,7 +11,7 @@ cd C:\Users\caleb\StudioProjects\React-Native-HALO
 corepack yarn install
 corepack yarn example start
 
-# 3. (New terminal) Navigate to android and build/install the APK
+# 3. (New terminal) Navigate to android and build/install the APK 
 cd C:\Users\caleb\StudioProjects\React-Native-HALO
 cd example/android
 .\gradlew.bat app:installDebug

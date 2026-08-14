@@ -14,12 +14,14 @@ import DocumentScanner, {
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
 import { launchImageLibrary } from 'react-native-image-picker';
+import OverlayEditor from './OverlayEditor';
 
 export default function App() {
   const [scannedImage, setScannedImage] = useState<string | null>(null);
   const [status, setStatus] = useState<string>('Ready to scan');
   const [error, setError] = useState<string | null>(null);
   const [overlayImage, setOverlayImage] = useState<string | null>(null);
+  const [showEditor, setShowEditor] = useState(false);
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice('back');
@@ -50,40 +52,40 @@ export default function App() {
         setStatus('Saved to camera roll!');
       }
     } catch (e: any) {
-        const msg = e?.message || e?.toString() || JSON.stringify(e) || 'Unknown error';
-        setError(msg);
-        setStatus('Error');
-        console.error('Scan error:', e);
+      const msg = e?.message || e?.toString() || JSON.stringify(e) || 'Unknown error';
+      setError(msg);
+      setStatus('Error');
+      console.error('Scan error:', e);
     }
   };
 
-const selectPhoto = async () => {
-  try {
-    setStatus('Opening photo library...');
-    setError(null);
+  const selectPhoto = async () => {
+    try {
+      setStatus('Opening photo library...');
+      setError(null);
 
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      selectionLimit: 1,
-    });
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 1,
+      });
 
-    if (result.didCancel) {
-      setStatus('Selection cancelled');
-      return;
+      if (result.didCancel) {
+        setStatus('Selection cancelled');
+        return;
+      }
+
+      const uri = result.assets?.[0]?.uri;
+      if (uri) {
+        setScannedImage(uri);
+        setStatus('Photo selected');
+      }
+    } catch (e: any) {
+      const msg = e?.message || e?.toString() || JSON.stringify(e) || 'Unknown error';
+      setError(msg);
+      setStatus('Error');
+      console.error('Photo selection error:', e);
     }
-
-    const uri = result.assets?.[0]?.uri;
-    if (uri) {
-      setScannedImage(uri);
-      setStatus('Photo selected');
-    }
-  } catch (e: any) {
-    const msg = e?.message || e?.toString() || JSON.stringify(e) || 'Unknown error';
-    setError(msg);
-    setStatus('Error');
-    console.error('Photo selection error:', e);
-  }
-};
+  };
 
   const pickOverlayImage = async () => {
     try {
@@ -123,9 +125,10 @@ const selectPhoto = async () => {
       return (
         <View style={styles.cameraPreview}>
           <Image source={{ uri: scannedImage }} style={styles.image} />
-            {overlayImage && (
+          {overlayImage && (
             <Image
-              source={{ uri: overlayImage }} style={styles.overlayImage}
+              source={{ uri: overlayImage }}
+              style={styles.overlayImage}
               resizeMode="contain"
             />
           )}
@@ -173,6 +176,17 @@ const selectPhoto = async () => {
     );
   };
 
+  if (showEditor && scannedImage && overlayImage) {
+    return (
+      <OverlayEditor
+        baseImage={scannedImage}
+        overlayImage={overlayImage}
+        onDone={() => setShowEditor(false)}
+        onCancel={() => setShowEditor(false)}
+      />
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
@@ -202,6 +216,12 @@ const selectPhoto = async () => {
         <TouchableOpacity style={styles.selectButton} onPress={selectPhoto}>
           <Text style={styles.selectButtonText}>Select Photo</Text>
         </TouchableOpacity>
+
+        {scannedImage && overlayImage && (
+          <TouchableOpacity style={styles.button} onPress={() => setShowEditor(true)}>
+            <Text style={styles.buttonText}>Edit with Overlay</Text>
+          </TouchableOpacity>
+        )}
 
         {scannedImage && (
           <TouchableOpacity style={styles.clearButton} onPress={clearScan}>
