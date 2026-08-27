@@ -71,6 +71,8 @@ export default function OverlayEditor({
     })
   ).current;
 
+  // Captures the ViewShot (base image + positioned overlay) as one flattened
+  // image, then saves that merged result to the camera roll.
   const handleSave = async () => {
     if (!viewShotRef.current?.capture) return;
 
@@ -138,7 +140,7 @@ export default function OverlayEditor({
           disabled={isSaving}
         >
           <Text style={styles.saveButtonText}>
-            {isSaving ? 'Saving...' : 'Crop & Save to Camera Roll'}
+            {isSaving ? 'Saving...' : 'Save Combined Photo'}
           </Text>
         </TouchableOpacity>
       </View>

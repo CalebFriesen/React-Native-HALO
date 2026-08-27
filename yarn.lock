@@ -13422,6 +13422,7 @@ __metadata:
     react-native-nitro-image: ^0.15.1
     react-native-nitro-modules: ^0.35.10
     react-native-safe-area-context: ^5.5.2
+    react-native-view-shot: latest
     react-native-vision-camera: ^5.0.11
   languageName: unknown
   linkType: soft
@@ -13457,7 +13458,7 @@ __metadata:
     react-native-builder-bob: ^0.40.13
     react-native-nitro-image: ^0.15.1
     react-native-nitro-modules: ^0.35.10
-    react-native-view-shot: ^5.1.1
+    react-native-view-shot: latest
     react-native-vision-camera: ^5.0.11
     release-it: ^17.10.0
     turbo: ^1.10.7
@@ -13519,7 +13520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-view-shot@npm:^5.1.1":
+"react-native-view-shot@npm:latest":
   version: 5.1.1
   resolution: "react-native-view-shot@npm:5.1.1"
   dependencies:

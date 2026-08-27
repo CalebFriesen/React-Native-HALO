@@ -18,6 +18,7 @@
     "react-native-nitro-image": "^0.15.1",
     "react-native-nitro-modules": "^0.35.10",
     "react-native-safe-area-context": "^5.5.2",
+    "react-native-view-shot": "latest",
     "react-native-vision-camera": "^5.0.11"
   },
   "devDependencies": {

@@ -172,7 +172,7 @@
     "@react-native-community/slider": "^5.2.0",
     "react-native-nitro-image": "^0.15.1",
     "react-native-nitro-modules": "^0.35.10",
-    "react-native-view-shot": "^5.1.1",
+    "react-native-view-shot": "latest",
     "react-native-vision-camera": "^5.0.11"
   }
 }
