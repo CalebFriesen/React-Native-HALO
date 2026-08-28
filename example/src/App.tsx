@@ -201,6 +201,16 @@ export default function App() {
           <Text style={styles.buttonText}>Scan Document</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.selectButton} onPress={selectPhoto}>
+          <Text style={styles.selectButtonText}>Select Photo</Text>
+        </TouchableOpacity>
+
+        {scannedImage && (
+          <TouchableOpacity style={styles.clearButton} onPress={clearScan}>
+            <Text style={styles.clearButtonText}>Clear Photo</Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity style={styles.selectButton} onPress={pickOverlayImage}>
           <Text style={styles.selectButtonText}>
             {overlayImage ? 'Change Overlay Image' : 'Add Overlay Image'}
@@ -213,19 +223,9 @@ export default function App() {
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity style={styles.selectButton} onPress={selectPhoto}>
-          <Text style={styles.selectButtonText}>Select Photo</Text>
-        </TouchableOpacity>
-
         {scannedImage && overlayImage && (
           <TouchableOpacity style={styles.button} onPress={() => setShowEditor(true)}>
             <Text style={styles.buttonText}>Edit with Overlay</Text>
-          </TouchableOpacity>
-        )}
-
-        {scannedImage && (
-          <TouchableOpacity style={styles.clearButton} onPress={clearScan}>
-            <Text style={styles.clearButtonText}>Clear</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
