@@ -2,7 +2,7 @@ Change from auto to manual
 
 Find where it saves it to, and configure to save to the HALO HALO repo
 
-Create overlay feature
+Create overlay feature - DONE
 
 # 1. Navigate to the project root
 cd C:\Users\caleb\StudioProjects\React-Native-HALO
